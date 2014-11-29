@@ -57,7 +57,12 @@ class HomeController extends BaseController {
 			->with('flash_notice', 'You have successfully logged out.');
 	}
 	
+	/**
+	 * Get data from DB and pass to list view
+	 */
 	public function listPasswords() {
-		return View::make('pages.passwords');
+		$data = DB::table('manager')->get();
+		
+		return View::make('pages.passwords')->with('passwords', $data);
 	}
 }
