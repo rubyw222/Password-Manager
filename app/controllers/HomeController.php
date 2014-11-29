@@ -19,5 +19,35 @@ class HomeController extends BaseController {
 	{
 		return View::make('hello');
 	}
+	
+	public function showLogin() {
+		return View::make('pages.login');
+	}
+	
+	public function login() {
+		$user = array(
+			'email' => Input::get('email'),
+			'password' => Input::get('password')
+		);
+		
+		if (Auth::attempt($user)) {
+			return Redirect::to('passwords')
+				->with('flash_notice', 'You have successfully logged in.');
+		}
+		
+		return Redirect::to('/')
+			->with('flash_notice', 'Your username and/or password are incorrect, please try again.')
+			->withInput($user);
+	}
+	
+	public function logout() {
+		Auth::logout();
 
+		return Redirect::to('/')
+			->with('flash_notice', 'You have successfully logged out.');
+	}
+	
+	public function listPasswords() {
+		return View::make('pages.passwords');
+	}
 }

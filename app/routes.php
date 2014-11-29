@@ -11,7 +11,11 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', array('before' => 'guest', 'uses' => 'HomeController@showLogin'));
+
+Route::post('login', array('before' => 'guest', 'uses' => 'HomeController@login'));
+
+Route::get('logout', array('before' => 'auth', 'uses' => 'HomeController@logout'));
+
+Route::get('passwords', array('before' => 'auth', 'uses' => 'HomeController@listPasswords'));
+
