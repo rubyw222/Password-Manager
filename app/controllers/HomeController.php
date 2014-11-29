@@ -20,10 +20,16 @@ class HomeController extends BaseController {
 		return View::make('hello');
 	}
 	
+	/**
+	 * Display login form
+	 */
 	public function showLogin() {
 		return View::make('pages.login');
 	}
 	
+	/**
+	 * Get user details from login form and attempt login
+	 */
 	public function login() {
 		$user = array(
 			'email' => Input::get('email'),
@@ -35,11 +41,15 @@ class HomeController extends BaseController {
 				->with('flash_notice', 'You have successfully logged in.');
 		}
 		
+		// redirect to login form if unsuccessful
 		return Redirect::to('/')
 			->with('flash_notice', 'Your username and/or password are incorrect, please try again.')
 			->withInput($user);
 	}
 	
+	/**
+	 * Log user out and redirect to login form
+	 */
 	public function logout() {
 		Auth::logout();
 

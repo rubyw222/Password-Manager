@@ -11,11 +11,15 @@
 |
 */
 
+// index - login form
 Route::get('/', array('before' => 'guest', 'uses' => 'HomeController@showLogin'));
 
+// login action
 Route::post('login', array('before' => 'guest', 'uses' => 'HomeController@login'));
 
+// logout action
 Route::get('logout', array('before' => 'auth', 'uses' => 'HomeController@logout'));
 
+// page displayed upon login
 Route::get('passwords', array('before' => 'auth', 'uses' => 'HomeController@listPasswords'));
 

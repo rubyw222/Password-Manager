@@ -9,6 +9,7 @@
 
 	<h1>Password Manager | Login</h1>
 	<div>
+		<!-- login form -->
 		{{ Form::open(array('url' => 'login')) }}
 			<p>{{ Form::label('email', 'E-Mail Address') }}
 			{{ Form::email('email', Input::old('email')) }}</p>
