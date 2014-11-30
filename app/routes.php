@@ -23,9 +23,5 @@ Route::get('logout', array('before' => 'auth', 'uses' => 'HomeController@logout'
 // page displayed upon login
 Route::get('passwords', array('before' => 'auth', 'uses' => 'HomeController@listPasswords'));
 
-// create record
-Route::get('create', array('before' => 'auth', 'uses' => 'RecordController@createRecord'));
-
-// action create record
-Route::post('action_create', array('uses' => 'RecordController@actionCreate'));
-
+// resource for record controller - create, edit etc.
+Route::resource('record', 'RecordController');

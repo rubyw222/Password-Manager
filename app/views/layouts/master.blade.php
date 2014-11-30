@@ -3,7 +3,7 @@
 	<head>
 		<title>@section('title')
             Password Manager
-			@if ($title)
+			@if (!empty($title))
 				 | {{$title}}
 			@endif
         @show</title>
@@ -20,7 +20,7 @@
         @endif
 		
 		<div class="container">
-			<h1>Password Manager @if ($title) | {{$title}} @endif</h1>
+			<h1>Password Manager @if (!empty($title)) | {{$title}} @endif</h1>
             @yield('content')
         </div>
 	</body>

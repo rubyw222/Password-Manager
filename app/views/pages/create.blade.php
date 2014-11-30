@@ -3,8 +3,8 @@
 @section('content')
 
 	<div>
-		<!-- login form -->
-		{{ Form::open(array('url' => 'action_create')) }}
+		<!-- create form -->
+		{{ Form::open(array('route' => 'record.store', 'method' => 'POST')) }}
 			<p>{{ Form::label('description', 'Description') }}
 			{{ Form::text('description', Input::old('description')) }}</p>
 			
