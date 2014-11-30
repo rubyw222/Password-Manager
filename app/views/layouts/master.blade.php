@@ -7,6 +7,7 @@
 				 | {{$title}}
 			@endif
         @show</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<!-- if user is logged in, show logout link -->

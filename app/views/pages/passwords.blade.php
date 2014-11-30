@@ -1,7 +1,22 @@
 @extends('layouts.master')
 
 @section('content')
-
+	
+	<script type="text/javascript">
+	
+		$(document).ready(function() {
+			$('.pwdtxt').hide();
+			$('.hiddenpwd').show();
+		});
+		
+		function showPassword(id) {
+			$('#pwdtxt_'+id).show();
+			$('#hiddenpwd_'+id).hide();
+			$('#showpwd_'+id).prop('disabled', true);
+		};
+	
+	</script>
+	
 	<a href="{{ URL::route('record.create') }}">Create new record</a>
     
 	<!-- if passwords present in DB then display table of data -->
@@ -15,6 +30,7 @@
 				<th>Password</th>
 				<th></th>
 				<th></th>
+				<th></th>
 			</tr>
 			@foreach ($passwords as $password)
 				<tr>
@@ -22,7 +38,11 @@
 					<td>{{$password['description']}}</td>
 					<td>{{$password['URL']}}</td>
 					<td>{{$password['username']}}</td>
-					<td>{{$password['password']}}</td>
+					<td>
+						<span class="hiddenpws" id="hiddenpwd_{{$password['id']}}">******</span>
+						<span class="pwdtxt" id="pwdtxt_{{$password['id']}}">{{$password['password']}}</span>
+					</td>
+					<td><button onClick="showPassword({{$password['id']}});" id="showpwd_{{$password['id']}}">Show</button></td>
 					<td><a href="{{ URL::route('record.edit', $password['id']) }}">Edit</a></td>
 					<td>
 						{{ Form::model($password, array('method' => 'DELETE', 'route' => array('record.destroy', $password->id))) }}
