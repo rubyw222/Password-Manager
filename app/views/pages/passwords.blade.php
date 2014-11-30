@@ -24,7 +24,11 @@
 					<td>{{$password['username']}}</td>
 					<td>{{$password['password']}}</td>
 					<td><a href="{{ URL::route('record.edit', $password['id']) }}">Edit</a></td>
-					<td><a href="{{ URL::route('record.destroy', $password['id']) }}">Delete</a></td>
+					<td>
+						{{ Form::model($password, array('method' => 'DELETE', 'route' => array('record.destroy', $password->id))) }}
+							{{ Form::submit('Delete') }}
+						{{ Form::close() }}
+					</td>
 				</tr>
 			@endforeach
 		</table>

@@ -55,11 +55,7 @@ class RecordController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$record = Record::findOrFail($id);
-		
-		return View::make('pages.delete')
-			->with('record', $record)
-			->with('title', 'Delete password record');
+		//
 	}
 
 
