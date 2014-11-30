@@ -3,6 +3,9 @@
 	<head>
 		<title>@section('title')
             Password Manager
+			@if ($title)
+				 | {{$title}}
+			@endif
         @show</title>
 	</head>
 	<body>
@@ -17,6 +20,7 @@
         @endif
 		
 		<div class="container">
+			<h1>Password Manager @if ($title) | {{$title}} @endif</h1>
             @yield('content')
         </div>
 	</body>

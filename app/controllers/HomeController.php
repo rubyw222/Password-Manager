@@ -24,7 +24,8 @@ class HomeController extends BaseController {
 	 * Display login form
 	 */
 	public function showLogin() {
-		return View::make('pages.login');
+		return View::make('pages.login')
+			->with('title', 'Login');
 	}
 	
 	/**
@@ -38,12 +39,14 @@ class HomeController extends BaseController {
 		
 		if (Auth::attempt($user)) {
 			return Redirect::to('passwords')
-				->with('flash_notice', 'You have successfully logged in.');
+				->with('flash_notice', 'You have successfully logged in.')
+				->with('title', 'List passwords');
 		}
 		
 		// redirect to login form if unsuccessful
 		return Redirect::to('/')
 			->with('flash_notice', 'Your username and/or password are incorrect, please try again.')
+			->with('title', 'Login')
 			->withInput($user);
 	}
 	
@@ -54,6 +57,7 @@ class HomeController extends BaseController {
 		Auth::logout();
 
 		return Redirect::to('/')
+			->with('title', 'Login')
 			->with('flash_notice', 'You have successfully logged out.');
 	}
 	
@@ -61,8 +65,10 @@ class HomeController extends BaseController {
 	 * Get data from DB and pass to list view
 	 */
 	public function listPasswords() {
-		$data = DB::table('manager')->get();
+		$data = Record::all();
 		
-		return View::make('pages.passwords')->with('passwords', $data);
+		return View::make('pages.passwords')
+			->with('title', 'List passwords')
+			->with('passwords', $data);
 	}
 }

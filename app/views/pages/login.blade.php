@@ -1,13 +1,7 @@
 @extends('layouts.master')
 
-@title
-	@parent
-	 | Login
-@stop
-
 @section('content')
 
-	<h1>Password Manager | Login</h1>
 	<div>
 		<!-- login form -->
 		{{ Form::open(array('url' => 'login')) }}
