@@ -32,15 +32,25 @@ class RecordController extends \BaseController {
 	 */
 	public function store()
 	{
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'description' 	=> 'required',
+				'username'		=> 'required',
+				'password'		=> 'required',
+			)
+		);
+		
 		// attempt to create row in database
-		if (Record::create(Input::all())) {
+		if ($validator->passes() && Record::create(Input::all())) {
 			return Redirect::to('passwords')
 				->with('flash_notice', 'You have successfully added a new password record.')
 				->with('title', 'List passwords');
 		}
 		
 		// redirect back to create form if create is unsuccessful
-		return Redirect::to('create')
+		return Redirect::route('record.create')
+			->withErrors($validator)
 			->with('flash_notice', 'Unable to create record at this time, please try again.')
 			->with('title', 'Create password record')
 			->withInput();
@@ -84,14 +94,31 @@ class RecordController extends \BaseController {
 	 */
 	public function update($id)
 	{
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'description' 	=> 'required',
+				'username'		=> 'required',
+				'password'		=> 'required',
+			)
+		);
+		
 		// get record we want to update
 		$record = Record::findOrFail($id);
 		$record->fill(Input::all());
-		$record->save();
-	
-		return Redirect::to('passwords')
-			->with('flash_notice', 'Successfully updated record.')
-			->with('title', 'List passwords');
+		
+		if ($validator->passes() && $record->save()) {
+			return Redirect::to('passwords')
+				->with('flash_notice', 'Successfully updated record.')
+				->with('title', 'List passwords');
+		}
+		
+		// redirect back to edit form if save is unsuccessful
+		return Redirect::route('record.edit', $id)
+			->withErrors($validator)
+			->with('flash_notice', 'Unable to update record at this time, please try again.')
+			->with('title', 'Create password record')
+			->withInput();
 	}
 
 
@@ -106,11 +133,15 @@ class RecordController extends \BaseController {
 		//get record we want to delete
 		$record = Record::findOrFail($id);
 		
-		$record->delete();
+		if ($record->delete()) {
+			return Redirect::to('passwords')
+				->with('flash_notice', 'Successfully deleted record.')
+				->with('title', 'List passwords');
+		}
 		
 		return Redirect::to('passwords')
-			->with('flash_notice', 'Successfully deleted record.')
-			->with('title', 'List passwords');
+				->with('flash_notice', 'Unable to delete record at this time, please try again.')
+				->with('title', 'List passwords');
 	}
 
 
