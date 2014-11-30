@@ -24,4 +24,6 @@ Route::get('logout', array('before' => 'auth', 'uses' => 'HomeController@logout'
 Route::get('passwords', array('before' => 'auth', 'uses' => 'HomeController@listPasswords'));
 
 // resource for record controller - create, edit etc.
-Route::resource('record', 'RecordController');
+Route::group(array('before' => 'auth'), function() {
+    Route::resource('record', 'RecordController'); 
+});
